@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="sv"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>NextCup</title>
+<style>
+:root{--bg:#f5f6f8;--card:#fff;--tx:#14171c;--mu:#667085;--ac:#1a56db;--bd:#e2e5ea;--live:#12805c;--chip:#e9ecf1;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1216;--card:#181c22;--tx:#eceef2;--mu:#9aa3b2;--ac:#7aa5ff;--bd:#272c35;--live:#3ecf9b;--chip:#222833;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f1216;--card:#181c22;--tx:#eceef2;--mu:#9aa3b2;--ac:#7aa5ff;--bd:#272c35;--live:#3ecf9b;--chip:#222833;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:720px;margin:0 auto;padding:16px 14px 40px}
+h1{font-size:1.6rem;margin:6px 0 2px}
+.sub{color:var(--mu);font-size:.9rem;margin:0 0 14px}
+input[type=search]{width:100%;box-sizing:border-box;padding:11px 14px;border-radius:12px;border:1px solid var(--bd);background:var(--card);color:var(--tx);font-size:1rem}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:12px 0 6px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;border:0;border-radius:999px;padding:7px 13px;background:var(--chip);color:var(--tx);font-size:.88rem;cursor:pointer}
+.chip.on{background:var(--ac);color:#fff}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:#0b1220}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:#0b1220;color:#fff}
+.hd{max-width:720px;margin:0 auto;display:flex;align-items:center;gap:4px;padding:8px 8px 8px 16px}
+.logo{flex:1;font-size:1.5rem;font-weight:800;letter-spacing:-.02em}
+.logo b{color:#f2b632;font-weight:800}
+.ib{background:none;border:0;color:#fff;width:44px;height:44px;display:grid;place-items:center;cursor:pointer;border-radius:12px}
+.ib:active{background:#ffffff26}
+#sb{display:none;padding:0 14px 12px}
+body.srch #sb{display:block}
+#sb input{width:100%;box-sizing:border-box;padding:11px 14px;border-radius:12px;border:0;background:#fff;color:#14171c;font-size:1rem}
+#ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:40}
+body.menu #ov{display:block}
+#drawer{position:fixed;top:0;right:0;bottom:0;width:min(330px,86vw);box-sizing:border-box;background:var(--card);color:var(--tx);transform:translateX(100%);transition:transform .25s;z-index:50;overflow-y:auto;padding:calc(env(safe-area-inset-top,0px) + 14px) 10px calc(env(safe-area-inset-bottom,0px) + 24px)}
+body.menu #drawer{transform:none}
+.dh{font-weight:700;font-size:1.1rem;padding:6px 14px 10px}
+.chips{display:block;overflow:visible;padding:0}
+.chip{display:flex;width:100%;justify-content:space-between;align-items:center;border-radius:12px;padding:13px 14px;background:none;font-size:1rem;text-align:left}
+.chip .n{color:var(--mu);font-size:.85rem}
+.chip.on .n{color:#fff}
+body::before,header{background:#0b0e17}
+header{border-bottom:1px solid #262a3a}
+.hd{gap:10px;padding:12px 14px}
+.logo{display:flex;align-items:center;gap:12px;font-size:1.75rem;font-style:italic;font-weight:900;letter-spacing:-.04em;line-height:1}
+.logo b{color:#f2b632;font-weight:900}
+.lg{width:48px;height:48px;border-radius:14px;background:#161a28;border:1px solid #2a3045;display:grid;place-items:center;font-size:1.5rem;font-style:normal;letter-spacing:0;flex:none}
+.ib{width:46px;height:46px;border-radius:14px;background:#161a28;border:1px solid #2a3045;color:#e6e9f2}
+#sb input{background:#161a28;color:#e6e9f2;border:1px solid #2a3045}
+.opt{display:flex;justify-content:space-between;align-items:center;color:var(--mu);font-size:.85rem;margin:6px 2px 0}
+.opt label{cursor:pointer}
+h2{font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;color:var(--mu);margin:22px 2px 8px}
+.card{display:flex;gap:12px;align-items:center;background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:12px 14px;margin-bottom:8px}
+.card.live{border-color:var(--live)}
+.card.done{opacity:.55}
+.em{font-size:1.7rem;flex:none;width:2.2rem;text-align:center}
+.bd{flex:1;min-width:0}
+.nm{font-weight:600}
+.mt{color:var(--mu);font-size:.85rem}
+.tv{font-size:.8rem;color:var(--ac);margin-top:2px}
+.st{flex:none;text-align:right;font-size:.8rem;font-weight:600;color:var(--ac);max-width:6.5rem}
+.live .st{color:var(--live)}
+.done .st{color:var(--mu)}
+.empty{text-align:center;color:var(--mu);padding:40px 0}
+footer{color:var(--mu);font-size:.78rem;text-align:center;margin-top:26px}
+</style></head><body>
+<header><div class="hd"><div class="logo"><span class="lg">🏆</span><span>Next<b>Cup</b></span></div><button class="ib" id="sbtn" aria-label="Sök"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></button><button class="ib" id="mbtn" aria-label="Meny"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button></div><div id="sb"><input type="search" id="q" placeholder="Sök sport, mästerskap eller plats…"></div></header>
+<div id="ov"></div>
+<aside id="drawer"><div class="dh">Sporter</div><div class="chips" id="chips"></div></aside>
+<main>
+<div class="opt"><span id="cnt"></span><label><input type="checkbox" id="past"> Visa avslutade</label></div>
+<div id="list"></div>
+<footer>Ca = preliminärt datum. "Datum ej klart" = arrangör har inte publicerat datum. Ingen 📺-rad = sändare ej bekräftad. Rättigheter byter ägare ofta. Uppdaterad 9 nov 2026.</footer>
+</main>
+<script>
+const S={ten:["🎾","Tennis"],fot:["⚽","Fotboll"],fri:["🏃","Friidrott"],lan:["🎿","Längdskidor"],sky:["🎯","Skidskytte"],alp:["⛷️","Alpint"],skr:["⛸️","Skridskor"],snö:["🏂","Snowboard & freestyle"],cur:["🥌","Curling"],mot:["🏎️","Formel 1"],hoc:["🏒","Ishockey"],han:["🤾","Handboll"],rug:["🏉","Rugby"],spel:["🏅","OS"],pil:["🎱","Pil & snooker"],sim:["🏊","Simning"],bas:["🏀","Basket"],vol:["🏐","Volleyboll"],bea:["🏖️","Beachvolleyboll"],bor:["🏓","Bordtennis"]};
+// [start, slut, namn, sport, plats, preliminärt?, egen datumtext]
+const E=[
+["2026-11-15","2026-11-22","ATP Finals","ten","Turin, Italien"],
+["2026-11-17","2026-11-22","Davis Cup Finals","ten","Bologna, Italien",1],
+["2027-01-18","2027-01-31","Australian Open","ten","Melbourne, Australien",1],
+["2027-05-23","2027-06-06","Roland Garros","ten","Paris, Frankrike",1],
+["2027-06-28","2027-07-11","Wimbledon","ten","London, England"],
+["2027-08-30","2027-09-12","US Open","ten","New York, USA"],
+["2027-06-24","2027-07-25","Fotbolls-VM damer","fot","Brasilien"],
+["2027-09-17","2027-10-09","Fotbolls-VM herrar U20 (junior)","fot","Azerbajdzjan & Uzbekistan"],
+["2028-06-09","2028-07-09","Fotbolls-EM herrar","fot","Storbritannien & Irland",1],
+["2029-07-01","2029-07-31","Fotbolls-EM damer","fot","Tyskland",2,"sommar 2029"],
+["2030-06-01","2030-07-21","Fotbolls-VM herrar","fot","Spanien, Portugal & Marocko",2,"sommar 2030"],
+["2027-05-07","2027-05-07","Diamond League: Doha","fri","Qatar"],
+["2027-05-15","2027-05-15","Diamond League: Shanghai/Keqiao","fri","Kina"],
+["2027-05-22","2027-05-22","Diamond League: Xiamen","fri","Kina"],
+["2027-05-27","2027-05-27","Diamond League: Rom","fri","Italien"],
+["2027-05-30","2027-05-30","Diamond League: Rabat","fri","Marocko"],
+["2027-06-03","2027-06-03","Diamond League: Oslo","fri","Norge"],
+["2027-06-06","2027-06-06","Diamond League: Stockholm","fri","Sverige"],
+["2027-06-25","2027-06-25","Diamond League: Paris","fri","Frankrike",1],
+["2027-07-03","2027-07-03","Diamond League: Eugene","fri","USA",1],
+["2027-07-09","2027-07-09","Diamond League: Monaco","fri","Monaco",1],
+["2027-07-13","2027-07-13","Diamond League: Lausanne","fri","Schweiz",1],
+["2027-07-17","2027-07-17","Diamond League: London","fri","England",1],
+["2027-08-15","2027-08-15","Diamond League: Silesia","fri","Polen",1],
+["2027-08-20","2027-08-20","Diamond League: Bryssel","fri","Belgien",2,"aug 2027"],
+["2027-08-25","2027-08-26","Diamond League: final","fri","Zürich, Schweiz"],
+["2027-07-15","2027-07-18","Friidrotts-EM U20","fri","Bydgoszcz, Polen"],
+["2027-07-20","2027-07-25","Friidrotts-EM U23","fri","Ej klart",2,"sommar 2027"],
+["2027-07-01","2027-07-03","Friidrotts-SM","fri","Sverige",2,"sommar 2027"],
+["2027-08-27","2027-08-29","Finnkampen","fri","Ej klart",2,"aug 2027"],
+["2027-09-11","2027-09-19","Friidrotts-VM","fri","Peking, Kina"],
+["2028-06-01","2028-06-30","Friidrotts-EM","fri","Ej klart",2,"2028"],
+["2026-11-27","2026-11-29","Längd: Världscup Ruka","lan","Finland"],
+["2026-12-04","2026-12-06","Längd: Världscup Trondheim","lan","Norge"],
+["2026-12-11","2026-12-13","Längd: Världscup Davos","lan","Schweiz"],
+["2027-01-01","2027-01-10","Längd: Tour de Ski","lan","Les Rousses–Oberstdorf–Val di Fiemme",1],
+["2027-01-19","2027-01-24","Längd: Junior-VM","lan","Otepää, Estland"],
+["2027-01-22","2027-01-24","Längd: Världscup Engadin","lan","Schweiz"],
+["2027-01-29","2027-01-31","Längd: Världscup Toblach","lan","Italien"],
+["2027-02-12","2027-02-14","Längd: Världscup Lahtis","lan","Finland"],
+["2027-02-24","2027-03-07","Längd: Skid-VM","lan","Falun, Sverige"],
+["2027-03-13","2027-03-14","Längd: Världscup Holmenkollen","lan","Oslo, Norge"],
+["2027-03-19","2027-03-21","Längd: Världscup Ulricehamn","lan","Sverige"],
+["2026-11-26","2026-11-29","Skidskytte: Världscup Kontiolahti","sky","Finland"],
+["2026-12-04","2026-12-06","Skidskytte: Världscup Hochfilzen","sky","Österrike"],
+["2026-12-10","2026-12-13","Skidskytte: Världscup Annecy","sky","Frankrike"],
+["2027-01-02","2027-01-03","Skidskytte: Världscup Pokljuka","sky","Slovenien",1],
+["2027-01-06","2027-01-10","Skidskytte: Världscup Ruhpolding","sky","Tyskland"],
+["2027-01-14","2027-01-17","Skidskytte: Världscup Antholz","sky","Italien"],
+["2027-01-21","2027-01-24","Skidskytte: Världscup Nové Město","sky","Tjeckien"],
+["2027-02-10","2027-02-21","Skidskytte-VM","sky","Otepää, Estland"],
+["2027-02-24","2027-03-01","Skidskytte: Junior-VM","sky","Polen"],
+["2027-03-04","2027-03-07","Skidskytte: Världscup Oberhof","sky","Tyskland"],
+["2027-03-11","2027-03-14","Skidskytte: Världscup Östersund","sky","Sverige"],
+["2027-03-18","2027-03-21","Skidskytte: Världscup Holmenkollen","sky","Oslo, Norge"],
+["2027-02-08","2027-02-21","Alpina VM","alp","Crans-Montana, Schweiz",2,"feb 2027"],
+["2027-02-12","2027-03-14","Skridsko-VM","skr","Ej klart",2,"feb–mars 2027"],
+["2027-01-22","2027-01-24","X Games","snö","Aspen, USA",2,"jan 2027"],
+["2027-03-01","2027-03-31","Freestyle- & snowboard-VM","snö","Ej klart",2,"mars 2027"],
+["2027-03-20","2027-04-10","Curling-VM","cur","Ej klart",2,"mars–apr 2027"],
+["2026-12-26","2027-01-05","Ishockey: Junior-VM","hoc","Minnesota, USA",1],
+["2027-05-14","2027-05-30","Ishockey-VM herrar","hoc","Tyskland",1],
+["2026-12-03","2026-12-20","Handbolls-EM damer","han","Polen m.fl.",1],
+["2027-01-13","2027-01-31","Handbolls-VM herrar","han","Tyskland"],
+["2027-02-05","2027-03-13","Six Nations","rug","Europa",1],
+["2027-10-01","2027-11-13","Rugby-VM herrar","rug","Australien",1],
+["2028-07-14","2028-07-30","Sommar-OS","spel","Los Angeles, USA"],
+["2030-02-01","2030-02-17","Vinter-OS","spel","Franska Alperna",1,"feb 2030"],
+["2026-12-11","2027-01-03","Dart-VM","pil","London, England"],
+["2027-04-17","2027-05-03","Snooker-VM","pil","Sheffield, England",1],
+["2027-06-26","2027-07-18","Simsport-VM","sim","Budapest, Ungern"],
+["2027-08-27","2027-09-12","Basket-VM","bas","Qatar"],
+["2027-06-01","2027-06-30","Basket-EM damer","bas","Ej klart",2,"2027"],
+["2029-08-25","2029-09-10","Basket-EM herrar","bas","Ej klart",2,"2029"],
+["2027-05-01","2027-05-31","Bordtennis-VM","bor","Ej klart",2,"2027"],
+["2027-08-20","2027-09-05","Volleyboll-VM damer","vol","USA & Kanada"],
+["2027-09-10","2027-09-26","Volleyboll-VM herrar","vol","Polen"],
+["2027-09-01","2027-09-30","Beachvolleyboll-VM","bea","Ej klart",2,"2027"]
+];
+// F1: [kval, lopp, GP, plats]
+const F=[["2026-11-20","2026-11-21","Las Vegas","USA"],["2026-11-28","2026-11-29","Qatar","Lusail"],["2026-12-05","2026-12-06","Abu Dhabi","Yas Marina"],
+["2027-03-13","2027-03-14","Bahrain (sprint)","Sakhir"],["2027-03-20","2027-03-21","Saudiarabien","Jeddah"],["2027-04-03","2027-04-04","Australien (sprint)","Melbourne"],["2027-04-10","2027-04-11","Japan (sprint)","Suzuka"],["2027-04-17","2027-04-18","Kina","Shanghai"],["2027-05-01","2027-05-02","Miami","USA"],["2027-05-22","2027-05-23","Kanada (sprint)","Montréal"],["2027-06-05","2027-06-06","Monaco (sprint)","Monte Carlo"],["2027-06-19","2027-06-20","Portugal","Algarve"],["2027-07-03","2027-07-04","Storbritannien (sprint)","Silverstone"],["2027-07-10","2027-07-11","Österrike","Spielberg"],["2027-07-24","2027-07-25","Belgien","Spa"],["2027-07-31","2027-08-01","Ungern","Budapest"],["2027-09-04","2027-09-05","Italien (sprint)","Monza"],["2027-09-11","2027-09-12","Spanien","Madrid"],["2027-09-25","2027-09-26","Azerbajdzjan","Baku"],["2027-10-02","2027-10-03","Turkiet","Istanbul"],["2027-10-09","2027-10-10","Singapore","Marina Bay"],["2027-10-23","2027-10-24","USA","Austin"],["2027-10-30","2027-10-31","Mexiko","Mexico City"],["2027-11-06","2027-11-07","Brasilien (sprint)","São Paulo"],["2027-11-19","2027-11-20","Las Vegas","USA"],["2027-12-04","2027-12-05","Qatar (sprint)","Lusail"],["2027-12-11","2027-12-12","Abu Dhabi (sprint)","Yas Marina"]];
+F.forEach(a=>E.push([a[0],a[1],"F1: "+a[2],"mot",a[3]]));
+const TV={"ATP Finals":"TV4 Play","Australian Open":"HBO Max","Roland Garros":"HBO Max","Wimbledon":"HBO Max","US Open":"HBO Max","Fotbolls-VM damer":"SVT & TV4","Fotbolls-EM herrar":"TV4","Handbolls-VM herrar":"Viaplay Sport & TV10","Längd: Skid-VM":"Viaplay","Alpina VM":"Viaplay","Freestyle- & snowboard-VM":"Viaplay","Sommar-OS":"SVT & TV4 (betal: HBO Max)","Vinter-OS":"SVT & TV4"};
+const P=s=>{const[a,b,c]=s.split("-");return new Date(+a,b-1,+c)};
+const T=new Date();T.setHours(0,0,0,0);
+const f=d=>d.toLocaleDateString("sv-SE",{day:"numeric",month:"short"}).replace(".","");
+const ev=E.map(a=>({s:P(a[0]),e:P(a[1]),n:a[2],k:a[3],p:a[4],ap:a[5],l:a[6],tv:TV[a[2]]||(a[3]==="mot"?"Viaplay":"")})).sort((x,y)=>x.s-y.s||x.e-y.e);
+let sel="",q="",showPast=false;
+function status(x){
+  if(x.e<T)return["done","Avslutat"];
+  if(x.ap===2)return["","Datum ej klart"];
+  if(x.s<=T)return["live","Pågår nu"];
+  const d=Math.round((x.s-T)/864e5);
+  return["",d===1?"Imorgon":d<=60?"om "+d+" dagar":d<=150?"om "+Math.round(d/7)+" veckor":"om "+Math.round(d/30.4)+" mån"];
+}
+function dtxt(x){
+  if(x.l)return x.l;
+  if(x.k==="mot"){const w=d=>d.toLocaleDateString("sv-SE",{weekday:"short",day:"numeric",month:"short"}).replace(/\./g,"");return "Kval "+w(x.s)+" · Lopp "+w(x.e)}
+  const t=+x.s===+x.e?f(x.s):f(x.s)+" – "+f(x.e);
+  const y=x.s.getFullYear()!==T.getFullYear()||x.e.getFullYear()!==x.s.getFullYear()?" "+(x.e.getFullYear()):"";
+  return (x.ap?"ca ":"")+t+y;
+}
+function draw(){
+  const ql=q.toLowerCase();
+  const rows=ev.filter(x=>(showPast||x.e>=T)&&(!sel||x.k===sel)&&(!ql||(x.n+" "+x.p+" "+S[x.k][1]+" "+(x.tv||"")).toLowerCase().includes(ql)));
+  document.getElementById("cnt").textContent=rows.length+" mästerskap"+(sel?" · "+S[sel][1]:"");
+  let h="",last="";
+  for(const x of rows){
+    const m=x.s.toLocaleDateString("sv-SE",{month:"long",year:"numeric"});
+    if(m!==last){h+="<h2>"+m+"</h2>";last=m}
+    const[c,t]=status(x);
+    h+='<div class="card '+c+'"><div class="em">'+S[x.k][0]+'</div><div class="bd"><div class="nm">'+x.n+'</div><div class="mt">'+dtxt(x)+' · '+x.p+'</div>'+(x.tv?'<div class="tv">📺 '+x.tv+'</div>':'')+'</div><div class="st">'+t+'</div></div>';
+  }
+  document.getElementById("list").innerHTML=h||'<div class="empty">Inget hittades.</div>';
+}
+function chips(){
+  const ks=Object.keys(S).filter(k=>ev.some(x=>x.k===k));
+  const el=document.getElementById("chips");
+  el.innerHTML='<button class="chip on" data-k="">Alla sporter</button>'+ks.map(k=>'<button class="chip" data-k="'+k+'"><span>'+S[k][0]+" "+S[k][1]+'</span><span class="n">'+ev.filter(x=>x.k===k).length+"</span></button>").join("");
+  el.onclick=e=>{const b=e.target.closest(".chip");if(!b)return;sel=b.dataset.k;el.querySelectorAll(".chip").forEach(c=>c.classList.toggle("on",c===b));document.body.classList.remove("menu");window.scrollTo(0,0);draw()};
+}
+document.getElementById("q").oninput=e=>{q=e.target.value;draw()};
+document.getElementById("past").onchange=e=>{showPast=e.target.checked;draw()};
+document.getElementById("mbtn").onclick=()=>document.body.classList.toggle("menu");
+document.getElementById("ov").onclick=()=>document.body.classList.remove("menu");
+document.getElementById("sbtn").onclick=()=>{const o=document.body.classList.toggle("srch");if(o)document.getElementById("q").focus()};
+chips();draw();
+</script></body></html>
