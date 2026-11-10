@@ -82,104 +82,17 @@ footer{color:var(--mu);font-size:.78rem;text-align:center;margin-top:26px}
 <main>
 <div class="opt"><span id="cnt"></span><label><input type="checkbox" id="past"> Visa avslutade</label></div>
 <div id="list"></div>
-<footer>Ca = preliminärt datum. "Datum ej klart" = arrangör har inte publicerat datum. Ingen TV-ikon = sändare ej bekräftad. Rättigheter byter ägare ofta. Uppdaterad 9 nov 2026.</footer>
+<footer>Ca = preliminärt datum. "Datum ej klart" = arrangör har inte publicerat datum. Ingen TV-ikon = sändare ej bekräftad. Rättigheter byter ägare ofta. <span id="upd"></span></footer>
 </main>
 <script>
-const S={ten:["🎾","Tennis"],fot:["⚽","Fotboll"],fri:["🏃","Friidrott"],lan:["🎿","Längdskidor"],sky:["🎯","Skidskytte"],alp:["⛷️","Alpint"],skr:["⛸️","Skridskor"],snö:["🏂","Snowboard & freestyle"],cur:["🥌","Curling"],mot:["🏎️","Formel 1"],hoc:["🏒","Ishockey"],han:["🤾","Handboll"],rug:["🏉","Rugby"],spel:["🏅","OS"],pil:["🎱","Pil & snooker"],sim:["🏊","Simning"],bas:["🏀","Basket"],vol:["🏐","Volleyboll"],bea:["🏖️","Beachvolleyboll"],bor:["🏓","Bordtennis"]};
 // [start, slut, namn, sport, plats, preliminärt?, egen datumtext]
-const E=[
-["2026-11-15","2026-11-22","ATP Finals","ten","Turin, Italien"],
-["2026-11-17","2026-11-22","Davis Cup Finals","ten","Bologna, Italien",1],
-["2027-01-18","2027-01-31","Australian Open","ten","Melbourne, Australien",1],
-["2027-05-23","2027-06-06","Roland Garros","ten","Paris, Frankrike",1],
-["2027-06-28","2027-07-11","Wimbledon","ten","London, England"],
-["2027-08-30","2027-09-12","US Open","ten","New York, USA"],
-["2027-06-24","2027-07-25","Fotbolls-VM damer","fot","Brasilien"],
-["2027-09-17","2027-10-09","Fotbolls-VM herrar U20 (junior)","fot","Azerbajdzjan & Uzbekistan"],
-["2028-06-09","2028-07-09","Fotbolls-EM herrar","fot","Storbritannien & Irland",1],
-["2029-07-01","2029-07-31","Fotbolls-EM damer","fot","Tyskland",2,"sommar 2029"],
-["2030-06-01","2030-07-21","Fotbolls-VM herrar","fot","Spanien, Portugal & Marocko",2,"sommar 2030"],
-["2027-05-07","2027-05-07","Diamond League: Doha","fri","Qatar"],
-["2027-05-15","2027-05-15","Diamond League: Shanghai/Keqiao","fri","Kina"],
-["2027-05-22","2027-05-22","Diamond League: Xiamen","fri","Kina"],
-["2027-05-27","2027-05-27","Diamond League: Rom","fri","Italien"],
-["2027-05-30","2027-05-30","Diamond League: Rabat","fri","Marocko"],
-["2027-06-03","2027-06-03","Diamond League: Oslo","fri","Norge"],
-["2027-06-06","2027-06-06","Diamond League: Stockholm","fri","Sverige"],
-["2027-06-25","2027-06-25","Diamond League: Paris","fri","Frankrike",1],
-["2027-07-03","2027-07-03","Diamond League: Eugene","fri","USA",1],
-["2027-07-09","2027-07-09","Diamond League: Monaco","fri","Monaco",1],
-["2027-07-13","2027-07-13","Diamond League: Lausanne","fri","Schweiz",1],
-["2027-07-17","2027-07-17","Diamond League: London","fri","England",1],
-["2027-08-15","2027-08-15","Diamond League: Silesia","fri","Polen",1],
-["2027-08-20","2027-08-20","Diamond League: Bryssel","fri","Belgien",2,"aug 2027"],
-["2027-08-25","2027-08-26","Diamond League: final","fri","Zürich, Schweiz"],
-["2027-07-15","2027-07-18","Friidrotts-EM U20","fri","Bydgoszcz, Polen"],
-["2027-07-20","2027-07-25","Friidrotts-EM U23","fri","Ej klart",2,"sommar 2027"],
-["2027-07-01","2027-07-03","Friidrotts-SM","fri","Sverige",2,"sommar 2027"],
-["2027-08-27","2027-08-29","Finnkampen","fri","Ej klart",2,"aug 2027"],
-["2027-09-11","2027-09-19","Friidrotts-VM","fri","Peking, Kina"],
-["2028-06-01","2028-06-30","Friidrotts-EM","fri","Ej klart",2,"2028"],
-["2026-11-27","2026-11-29","Längd: Världscup Ruka","lan","Finland"],
-["2026-12-04","2026-12-06","Längd: Världscup Trondheim","lan","Norge"],
-["2026-12-11","2026-12-13","Längd: Världscup Davos","lan","Schweiz"],
-["2027-01-01","2027-01-10","Längd: Tour de Ski","lan","Les Rousses–Oberstdorf–Val di Fiemme",1],
-["2027-01-19","2027-01-24","Längd: Junior-VM","lan","Otepää, Estland"],
-["2027-01-22","2027-01-24","Längd: Världscup Engadin","lan","Schweiz"],
-["2027-01-29","2027-01-31","Längd: Världscup Toblach","lan","Italien"],
-["2027-02-12","2027-02-14","Längd: Världscup Lahtis","lan","Finland"],
-["2027-02-24","2027-03-07","Längd: Skid-VM","lan","Falun, Sverige"],
-["2027-03-13","2027-03-14","Längd: Världscup Holmenkollen","lan","Oslo, Norge"],
-["2027-03-19","2027-03-21","Längd: Världscup Ulricehamn","lan","Sverige"],
-["2026-11-26","2026-11-29","Skidskytte: Världscup Kontiolahti","sky","Finland"],
-["2026-12-04","2026-12-06","Skidskytte: Världscup Hochfilzen","sky","Österrike"],
-["2026-12-10","2026-12-13","Skidskytte: Världscup Annecy","sky","Frankrike"],
-["2027-01-02","2027-01-03","Skidskytte: Världscup Pokljuka","sky","Slovenien",1],
-["2027-01-06","2027-01-10","Skidskytte: Världscup Ruhpolding","sky","Tyskland"],
-["2027-01-14","2027-01-17","Skidskytte: Världscup Antholz","sky","Italien"],
-["2027-01-21","2027-01-24","Skidskytte: Världscup Nové Město","sky","Tjeckien"],
-["2027-02-10","2027-02-21","Skidskytte-VM","sky","Otepää, Estland"],
-["2027-02-24","2027-03-01","Skidskytte: Junior-VM","sky","Polen"],
-["2027-03-04","2027-03-07","Skidskytte: Världscup Oberhof","sky","Tyskland"],
-["2027-03-11","2027-03-14","Skidskytte: Världscup Östersund","sky","Sverige"],
-["2027-03-18","2027-03-21","Skidskytte: Världscup Holmenkollen","sky","Oslo, Norge"],
-["2027-02-08","2027-02-21","Alpina VM","alp","Crans-Montana, Schweiz",2,"feb 2027"],
-["2027-02-12","2027-03-14","Skridsko-VM","skr","Ej klart",2,"feb–mars 2027"],
-["2027-01-22","2027-01-24","X Games","snö","Aspen, USA",2,"jan 2027"],
-["2027-03-01","2027-03-31","Freestyle- & snowboard-VM","snö","Ej klart",2,"mars 2027"],
-["2027-03-20","2027-04-10","Curling-VM","cur","Ej klart",2,"mars–apr 2027"],
-["2026-12-26","2027-01-05","Ishockey: Junior-VM","hoc","Minnesota, USA",1],
-["2027-05-14","2027-05-30","Ishockey-VM herrar","hoc","Tyskland",1],
-["2026-12-03","2026-12-20","Handbolls-EM damer","han","Polen m.fl.",1],
-["2027-01-13","2027-01-31","Handbolls-VM herrar","han","Tyskland"],
-["2027-02-05","2027-03-13","Six Nations","rug","Europa",1],
-["2027-10-01","2027-11-13","Rugby-VM herrar","rug","Australien",1],
-["2028-07-14","2028-07-30","Sommar-OS","spel","Los Angeles, USA"],
-["2030-02-01","2030-02-17","Vinter-OS","spel","Franska Alperna",1,"feb 2030"],
-["2026-12-11","2027-01-03","Dart-VM","pil","London, England"],
-["2027-04-17","2027-05-03","Snooker-VM","pil","Sheffield, England",1],
-["2027-06-26","2027-07-18","Simsport-VM","sim","Budapest, Ungern"],
-["2027-08-27","2027-09-12","Basket-VM","bas","Qatar"],
-["2027-06-01","2027-06-30","Basket-EM damer","bas","Ej klart",2,"2027"],
-["2029-08-25","2029-09-10","Basket-EM herrar","bas","Ej klart",2,"2029"],
-["2027-05-01","2027-05-31","Bordtennis-VM","bor","Ej klart",2,"2027"],
-["2027-08-20","2027-09-05","Volleyboll-VM damer","vol","USA & Kanada"],
-["2027-09-10","2027-09-26","Volleyboll-VM herrar","vol","Polen"],
-["2027-09-01","2027-09-30","Beachvolleyboll-VM","bea","Ej klart",2,"2027"]
-];
-// F1: [kval, lopp, GP, plats]
-const F=[["2026-11-20","2026-11-21","Las Vegas","USA"],["2026-11-28","2026-11-29","Qatar","Lusail"],["2026-12-05","2026-12-06","Abu Dhabi","Yas Marina"],
-["2027-03-13","2027-03-14","Bahrain (sprint)","Sakhir"],["2027-03-20","2027-03-21","Saudiarabien","Jeddah"],["2027-04-03","2027-04-04","Australien (sprint)","Melbourne"],["2027-04-10","2027-04-11","Japan (sprint)","Suzuka"],["2027-04-17","2027-04-18","Kina","Shanghai"],["2027-05-01","2027-05-02","Miami","USA"],["2027-05-22","2027-05-23","Kanada (sprint)","Montréal"],["2027-06-05","2027-06-06","Monaco (sprint)","Monte Carlo"],["2027-06-19","2027-06-20","Portugal","Algarve"],["2027-07-03","2027-07-04","Storbritannien (sprint)","Silverstone"],["2027-07-10","2027-07-11","Österrike","Spielberg"],["2027-07-24","2027-07-25","Belgien","Spa"],["2027-07-31","2027-08-01","Ungern","Budapest"],["2027-09-04","2027-09-05","Italien (sprint)","Monza"],["2027-09-11","2027-09-12","Spanien","Madrid"],["2027-09-25","2027-09-26","Azerbajdzjan","Baku"],["2027-10-02","2027-10-03","Turkiet","Istanbul"],["2027-10-09","2027-10-10","Singapore","Marina Bay"],["2027-10-23","2027-10-24","USA","Austin"],["2027-10-30","2027-10-31","Mexiko","Mexico City"],["2027-11-06","2027-11-07","Brasilien (sprint)","São Paulo"],["2027-11-19","2027-11-20","Las Vegas","USA"],["2027-12-04","2027-12-05","Qatar (sprint)","Lusail"],["2027-12-11","2027-12-12","Abu Dhabi (sprint)","Yas Marina"]];
-F.forEach(a=>E.push([a[0],a[1],"F1: "+a[2],"mot",a[3]]));
-const TV={"ATP Finals":"TV4 Play","Australian Open":"HBO Max","Roland Garros":"HBO Max","Wimbledon":"HBO Max","US Open":"HBO Max","Fotbolls-VM damer":"SVT & TV4","Fotbolls-EM herrar":"TV4","Handbolls-VM herrar":"Viaplay Sport & TV10","Längd: Skid-VM":"Viaplay","Alpina VM":"Viaplay","Freestyle- & snowboard-VM":"Viaplay","Sommar-OS":"SVT & TV4 (betal: HBO Max)","Vinter-OS":"SVT & TV4"};
 const P=s=>{const[a,b,c]=s.split("-");return new Date(+a,b-1,+c)};
 const T=new Date();T.setHours(0,0,0,0);
 const f=d=>d.toLocaleDateString("sv-SE",{day:"numeric",month:"short"}).replace(".","");
-const ev=E.map(a=>({s:P(a[0]),e:P(a[1]),n:a[2],k:a[3],p:a[4],ap:a[5],l:a[6],tv:TV[a[2]]||(a[3]==="mot"?"Viaplay":"")})).sort((x,y)=>x.s-y.s||x.e-y.e);
+let S={},ev=[];
 let sel="",q="",showPast=false;
 const TVI='<img class="tvi" alt="TV" src="data:image/webp;base64,UklGRmAEAABXRUJQVlA4IFQEAABQEwCdASpgAGAAPmUskkWkIqIYCc8YQAZEsYBdme1KJlZZlaT8KRJuepeeTz5s9FzfJQadUCjJALB+KrWiVGUs9MyPiyVEbPBu7h+fJyvIRnCHVurRds3W50zW3xAuHhe8M203P472EGwAvaw739hDTBUzsPT0JIawMNyjsUiPvrOyrNsAxqSBTr3G7B1hF1Ll5cbBR8+HR9yF9jWotKXjp3nAAP7+zNPcPoW6Vk/++cQO1/bQ+qpJrW/d8TG4o57MGfbOji+mhPVmNTtkgr21VXB7yfzd8ADpksp4vBEFKLXGJlrvg8YAXFpLpcHWHRfNkFCvGXFFs0exydaFl9w84WroUAzlKOjqKmUlbPO6t1cikZRniZBHU9duJcbskCquqjcf9W8sY5NnrDe6uUTnWQXkWMhnuCVNvI349YsT//H/HkKuPQOd+PqOyDafXIz+8LkuslkVufz4F4nFGgJPDtOFVbph/2ne5YalstIdMsARfWQ3DKtnv/hY/+nf3F6+faGgtoiYz3Fzn06TYpYs8h9Oz1DASrfmqQCv5ZGUVugALjylriO4P6ZF9Xy9Ak9IzlEmhblZW/iubLCkdUckBU0Fn8bWan7QU66/me5tEbTevYDWfxrCQXvxGuJ1WqbJUKYlrzevy78M+pMo4yjVLubrJvfnHqUN54N5jRgzsbK+zAN/ia/74kXH6Wacutt64rYil3eNVnr06tuRquBl/DsLybkDIt5LDc1+EFR/o2gQWunRQSnX0XN+nXBmD3uM+F91FeVwCHeidGlYpg7iJEF1pf4IiBTq4W5YyTN9nAx7UmzOCp32OWbayGyeJj++KYTXEVhka2WzMZG/vO5rQ8MvHh4lfiUqXiKQhJ6cAj6enBJzd2kR2VyJ6Tu7u1ycVLpvTKNjRk6f/b5KArHG+O2lIEY4+pLWorQdYbXqtiMQiaQOzDUKP6/554vkj5/SVczEKpjDBH6X8SC6daDRiFaOwlc/EafJZdSskXDBtXL/8wmvWHiPCe0Mb8jTVcJitGakFqLJZ5Tmiye6kAXO1euJrtyPFEzMbGRWt73/oQmbQfXQQ6Ws115lyfdEXjds9XHR9fx5zx1J/k1oH6X0Nw+UDQ7OYjYwLkmNObYzpqzYTidhaV7A/1s1/HwbPqnbJ7599yqCEylJAqj5wPBkZyE6aWdUYpcMPILwTcGcbPIz/d+/MCzB9WQ08Sd4Q6VNca9qJGBoEhe8Py8mRBSZ+0yJsodZ07/8eybQkPDkZRLgSUMdAVhrbgwy7FwweX9ip8JaCF2qARyqPR5kThU+Av2/XG6P1D/hJWKMjnIC72caokwjXYZ+9eUwl8avK+hvqglU8LlWlemnvfdCzz+beklRgrRC2P/r/lJJR76tGAWzsqp3qjux36/WKXacepAQ8sDmSd5/KzNFG5joQ0wLgECqq743PTArxqDQINWE1YuzzB+mZryuw/7XR81mOV25DAAA">';
 let cur=[];
-const D={"ATP Finals":"Säsongsavslutningen för de åtta bästa singelspelarna och dubbelparen.","Davis Cup Finals":"Tennisens lagturnering för landslag, där slutspelet avgörs under en vecka.","Australian Open":"Årets första Grand Slam, spelas på hardcourt.","Roland Garros":"Grand Slam på grus och tennisens tuffaste underlag fysiskt.","Wimbledon":"Grand Slam på gräs och den äldsta av de fyra stora turneringarna.","US Open":"Årets sista Grand Slam, spelas på hardcourt.","Fotbolls-VM damer":"Första damfotbolls-VM i Sydamerika.","Fotbolls-VM herrar U20 (junior)":"Ungdoms-VM för spelare upp till 20 år, med delat värdskap mellan två länder.","Fotbolls-EM herrar":"Europamästerskapet för herrlandslag.","Diamond League: final":"Säsongens avslutning där Diamond League-vinnarna i varje gren koras.","Friidrotts-VM":"Friidrottens stora världsmästerskap, spelas vartannat år.","Längd: Skid-VM":"Nordiska VM med längdskidor, backhoppning och nordisk kombination.","Längd: Tour de Ski":"Etapptävling i längdskidor över flera dagar och orter.","Skidskytte-VM":"Världsmästerskap i skidskytte med skidåkning och skytte.","Alpina VM":"Världsmästerskap i alpin skidåkning.","Ishockey-VM herrar":"Ishockeyns årliga världsmästerskap för herrlandslag.","Ishockey: Junior-VM":"Årligt VM för spelare upp till 20 år, spelas över jul och nyår.","Handbolls-VM herrar":"Handbollens världsmästerskap för herrlandslag med 32 lag.","Six Nations":"Europas årliga rugbyturnering mellan England, Frankrike, Irland, Italien, Skottland och Wales.","Rugby-VM herrar":"Rugbyns världsmästerskap för herrlandslag, spelas vart fjärde år.","Sommar-OS":"Olympiska sommarspelen 2028.","Vinter-OS":"Olympiska vinterspelen 2030.","Dart-VM":"PDC:s världsmästerskap i dart på Alexandra Palace.","Snooker-VM":"Snookerns VM, spelas på Crucible Theatre i Sheffield.","Simsport-VM":"VM i simning, hoppning, vattenpolo, konstsim och öppet vatten.","Basket-VM":"FIBA:s världsmästerskap för herrlandslag.","Volleyboll-VM damer":"Första gången USA och Kanada delar värdskap.","Volleyboll-VM herrar":"Världsmästerskapet för herrlandslag."};
 function show(i){
   const x=cur[i];if(!x)return;
   const t=status(x)[1],n=Math.round((x.e-x.s)/864e5)+1,ds=d=>d.toLocaleDateString("sv-SE",{weekday:"short",day:"numeric",month:"long",year:"numeric"});
@@ -190,7 +103,7 @@ function show(i){
   else w=(+x.s===+x.e?ds(x.s):ds(x.s)+" – "+ds(x.e))+(x.ap?" (ca)":"");
   const row=(a,b)=>'<div class="r"><span>'+a+'</span><b>'+b+'</b></div>';
   let h='<button class="x" aria-label="Stäng">✕</button><div class="mh">'+S[x.k][0]+'</div><h3>'+x.n+'</h3><div class="ms">'+S[x.k][1]+'</div>';
-  if(D[x.n])h+='<p class="desc">'+D[x.n]+'</p>';
+  if(x.d)h+='<p class="desc">'+x.d+'</p>';
   h+=row("Datum",w)+row("Plats",x.p)+row("Status",t);
   if(n>1&&x.k!=="mot"&&x.ap!==2&&!x.l)h+=row("Längd",n+" dagar");
   h+=row("TV i Sverige",x.tv?TVI+x.tv:"Ej bekräftad");
@@ -239,5 +152,11 @@ const mo=document.getElementById("mo");
 mo.onclick=e=>{if(e.target===mo||e.target.closest(".x"))document.body.classList.remove("mo")};
 document.addEventListener("keydown",e=>{if(e.key==="Escape")document.body.classList.remove("mo")});
 document.getElementById("list").onclick=e=>{const c=e.target.closest(".card");if(c)show(+c.dataset.i)};
-chips();draw();
+document.getElementById("list").innerHTML='<div class="empty">Laddar…</div>';
+fetch("events.json").then(r=>{if(!r.ok)throw 0;return r.json()}).then(j=>{
+  S=j.sports;
+  ev=j.events.map(a=>({s:P(a.s),e:P(a.e),n:a.n,k:a.k,p:a.p,ap:a.ap||0,l:a.l||"",tv:a.tv||"",d:a.d||""})).sort((x,y)=>x.s-y.s||x.e-y.e);
+  document.getElementById("upd").textContent="Uppdaterad "+P(j.updated).toLocaleDateString("sv-SE",{day:"numeric",month:"short",year:"numeric"})+".";
+  chips();draw();
+}).catch(()=>{document.getElementById("list").innerHTML='<div class="empty">Kunde inte läsa events.json.</div>'});
 </script></body></html>
