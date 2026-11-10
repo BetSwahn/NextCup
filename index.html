@@ -43,6 +43,21 @@ header{border-bottom:1px solid #262a3a}
 .lg{width:48px;height:48px;border-radius:14px;background:#161a28;border:1px solid #2a3045;display:grid;place-items:center;font-size:1.5rem;font-style:normal;letter-spacing:0;flex:none}
 .ib{width:46px;height:46px;border-radius:14px;background:#161a28;border:1px solid #2a3045;color:#e6e9f2}
 #sb input{background:#161a28;color:#e6e9f2;border:1px solid #2a3045}
+.card{cursor:pointer}
+.tvi{width:20px;height:20px;border-radius:6px;vertical-align:-5px;margin-right:6px}
+#mo{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:60;align-items:flex-end;justify-content:center}
+body.mo #mo{display:flex}
+#sh{position:relative;background:var(--card);color:var(--tx);width:100%;max-width:560px;border-radius:20px 20px 0 0;padding:22px 18px calc(env(safe-area-inset-bottom,0px) + 22px);max-height:85vh;overflow-y:auto;box-sizing:border-box}
+#sh .x{position:absolute;top:12px;right:12px;width:38px;height:38px;border:0;border-radius:12px;background:var(--chip);color:var(--tx);font-size:1rem;cursor:pointer}
+.mh{font-size:2rem}
+#sh h3{margin:4px 44px 2px 0;font-size:1.35rem}
+.ms{color:var(--mu);font-size:.9rem;margin-bottom:10px}
+.desc{margin:6px 0 10px;line-height:1.5}
+.r{display:flex;justify-content:space-between;gap:16px;padding:11px 0;border-bottom:1px solid var(--bd)}
+.r span{color:var(--mu)}
+.r b{text-align:right;font-weight:600}
+#sh .tvi{width:26px;height:26px;vertical-align:-8px}
+.go{display:block;margin-top:16px;text-align:center;padding:13px;border-radius:12px;background:var(--ac);color:#fff;text-decoration:none;font-weight:600}
 .opt{display:flex;justify-content:space-between;align-items:center;color:var(--mu);font-size:.85rem;margin:6px 2px 0}
 .opt label{cursor:pointer}
 h2{font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;color:var(--mu);margin:22px 2px 8px}
@@ -62,11 +77,12 @@ footer{color:var(--mu);font-size:.78rem;text-align:center;margin-top:26px}
 </style></head><body>
 <header><div class="hd"><div class="logo"><span class="lg">🏆</span><span>Next<b>Cup</b></span></div><button class="ib" id="sbtn" aria-label="Sök"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></button><button class="ib" id="mbtn" aria-label="Meny"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button></div><div id="sb"><input type="search" id="q" placeholder="Sök sport, mästerskap eller plats…"></div></header>
 <div id="ov"></div>
+<div id="mo"><div id="sh"></div></div>
 <aside id="drawer"><div class="dh">Sporter</div><div class="chips" id="chips"></div></aside>
 <main>
 <div class="opt"><span id="cnt"></span><label><input type="checkbox" id="past"> Visa avslutade</label></div>
 <div id="list"></div>
-<footer>Ca = preliminärt datum. "Datum ej klart" = arrangör har inte publicerat datum. Ingen 📺-rad = sändare ej bekräftad. Rättigheter byter ägare ofta. Uppdaterad 9 nov 2026.</footer>
+<footer>Ca = preliminärt datum. "Datum ej klart" = arrangör har inte publicerat datum. Ingen TV-ikon = sändare ej bekräftad. Rättigheter byter ägare ofta. Uppdaterad 9 nov 2026.</footer>
 </main>
 <script>
 const S={ten:["🎾","Tennis"],fot:["⚽","Fotboll"],fri:["🏃","Friidrott"],lan:["🎿","Längdskidor"],sky:["🎯","Skidskytte"],alp:["⛷️","Alpint"],skr:["⛸️","Skridskor"],snö:["🏂","Snowboard & freestyle"],cur:["🥌","Curling"],mot:["🏎️","Formel 1"],hoc:["🏒","Ishockey"],han:["🤾","Handboll"],rug:["🏉","Rugby"],spel:["🏅","OS"],pil:["🎱","Pil & snooker"],sim:["🏊","Simning"],bas:["🏀","Basket"],vol:["🏐","Volleyboll"],bea:["🏖️","Beachvolleyboll"],bor:["🏓","Bordtennis"]};
@@ -161,6 +177,26 @@ const T=new Date();T.setHours(0,0,0,0);
 const f=d=>d.toLocaleDateString("sv-SE",{day:"numeric",month:"short"}).replace(".","");
 const ev=E.map(a=>({s:P(a[0]),e:P(a[1]),n:a[2],k:a[3],p:a[4],ap:a[5],l:a[6],tv:TV[a[2]]||(a[3]==="mot"?"Viaplay":"")})).sort((x,y)=>x.s-y.s||x.e-y.e);
 let sel="",q="",showPast=false;
+const TVI='<img class="tvi" alt="TV" src="data:image/webp;base64,UklGRmAEAABXRUJQVlA4IFQEAABQEwCdASpgAGAAPmUskkWkIqIYCc8YQAZEsYBdme1KJlZZlaT8KRJuepeeTz5s9FzfJQadUCjJALB+KrWiVGUs9MyPiyVEbPBu7h+fJyvIRnCHVurRds3W50zW3xAuHhe8M203P472EGwAvaw739hDTBUzsPT0JIawMNyjsUiPvrOyrNsAxqSBTr3G7B1hF1Ll5cbBR8+HR9yF9jWotKXjp3nAAP7+zNPcPoW6Vk/++cQO1/bQ+qpJrW/d8TG4o57MGfbOji+mhPVmNTtkgr21VXB7yfzd8ADpksp4vBEFKLXGJlrvg8YAXFpLpcHWHRfNkFCvGXFFs0exydaFl9w84WroUAzlKOjqKmUlbPO6t1cikZRniZBHU9duJcbskCquqjcf9W8sY5NnrDe6uUTnWQXkWMhnuCVNvI349YsT//H/HkKuPQOd+PqOyDafXIz+8LkuslkVufz4F4nFGgJPDtOFVbph/2ne5YalstIdMsARfWQ3DKtnv/hY/+nf3F6+faGgtoiYz3Fzn06TYpYs8h9Oz1DASrfmqQCv5ZGUVugALjylriO4P6ZF9Xy9Ak9IzlEmhblZW/iubLCkdUckBU0Fn8bWan7QU66/me5tEbTevYDWfxrCQXvxGuJ1WqbJUKYlrzevy78M+pMo4yjVLubrJvfnHqUN54N5jRgzsbK+zAN/ia/74kXH6Wacutt64rYil3eNVnr06tuRquBl/DsLybkDIt5LDc1+EFR/o2gQWunRQSnX0XN+nXBmD3uM+F91FeVwCHeidGlYpg7iJEF1pf4IiBTq4W5YyTN9nAx7UmzOCp32OWbayGyeJj++KYTXEVhka2WzMZG/vO5rQ8MvHh4lfiUqXiKQhJ6cAj6enBJzd2kR2VyJ6Tu7u1ycVLpvTKNjRk6f/b5KArHG+O2lIEY4+pLWorQdYbXqtiMQiaQOzDUKP6/554vkj5/SVczEKpjDBH6X8SC6daDRiFaOwlc/EafJZdSskXDBtXL/8wmvWHiPCe0Mb8jTVcJitGakFqLJZ5Tmiye6kAXO1euJrtyPFEzMbGRWt73/oQmbQfXQQ6Ws115lyfdEXjds9XHR9fx5zx1J/k1oH6X0Nw+UDQ7OYjYwLkmNObYzpqzYTidhaV7A/1s1/HwbPqnbJ7599yqCEylJAqj5wPBkZyE6aWdUYpcMPILwTcGcbPIz/d+/MCzB9WQ08Sd4Q6VNca9qJGBoEhe8Py8mRBSZ+0yJsodZ07/8eybQkPDkZRLgSUMdAVhrbgwy7FwweX9ip8JaCF2qARyqPR5kThU+Av2/XG6P1D/hJWKMjnIC72caokwjXYZ+9eUwl8avK+hvqglU8LlWlemnvfdCzz+beklRgrRC2P/r/lJJR76tGAWzsqp3qjux36/WKXacepAQ8sDmSd5/KzNFG5joQ0wLgECqq743PTArxqDQINWE1YuzzB+mZryuw/7XR81mOV25DAAA">';
+let cur=[];
+const D={"ATP Finals":"Säsongsavslutningen för de åtta bästa singelspelarna och dubbelparen.","Davis Cup Finals":"Tennisens lagturnering för landslag, där slutspelet avgörs under en vecka.","Australian Open":"Årets första Grand Slam, spelas på hardcourt.","Roland Garros":"Grand Slam på grus och tennisens tuffaste underlag fysiskt.","Wimbledon":"Grand Slam på gräs och den äldsta av de fyra stora turneringarna.","US Open":"Årets sista Grand Slam, spelas på hardcourt.","Fotbolls-VM damer":"Första damfotbolls-VM i Sydamerika.","Fotbolls-VM herrar U20 (junior)":"Ungdoms-VM för spelare upp till 20 år, med delat värdskap mellan två länder.","Fotbolls-EM herrar":"Europamästerskapet för herrlandslag.","Diamond League: final":"Säsongens avslutning där Diamond League-vinnarna i varje gren koras.","Friidrotts-VM":"Friidrottens stora världsmästerskap, spelas vartannat år.","Längd: Skid-VM":"Nordiska VM med längdskidor, backhoppning och nordisk kombination.","Längd: Tour de Ski":"Etapptävling i längdskidor över flera dagar och orter.","Skidskytte-VM":"Världsmästerskap i skidskytte med skidåkning och skytte.","Alpina VM":"Världsmästerskap i alpin skidåkning.","Ishockey-VM herrar":"Ishockeyns årliga världsmästerskap för herrlandslag.","Ishockey: Junior-VM":"Årligt VM för spelare upp till 20 år, spelas över jul och nyår.","Handbolls-VM herrar":"Handbollens världsmästerskap för herrlandslag med 32 lag.","Six Nations":"Europas årliga rugbyturnering mellan England, Frankrike, Irland, Italien, Skottland och Wales.","Rugby-VM herrar":"Rugbyns världsmästerskap för herrlandslag, spelas vart fjärde år.","Sommar-OS":"Olympiska sommarspelen 2028.","Vinter-OS":"Olympiska vinterspelen 2030.","Dart-VM":"PDC:s världsmästerskap i dart på Alexandra Palace.","Snooker-VM":"Snookerns VM, spelas på Crucible Theatre i Sheffield.","Simsport-VM":"VM i simning, hoppning, vattenpolo, konstsim och öppet vatten.","Basket-VM":"FIBA:s världsmästerskap för herrlandslag.","Volleyboll-VM damer":"Första gången USA och Kanada delar värdskap.","Volleyboll-VM herrar":"Världsmästerskapet för herrlandslag."};
+function show(i){
+  const x=cur[i];if(!x)return;
+  const t=status(x)[1],n=Math.round((x.e-x.s)/864e5)+1,ds=d=>d.toLocaleDateString("sv-SE",{weekday:"short",day:"numeric",month:"long",year:"numeric"});
+  let w;
+  if(x.ap===2)w=x.l+" (ej klart)";
+  else if(x.l)w=x.l;
+  else if(x.k==="mot")w="Kval "+ds(x.s)+"<br>Lopp "+ds(x.e);
+  else w=(+x.s===+x.e?ds(x.s):ds(x.s)+" – "+ds(x.e))+(x.ap?" (ca)":"");
+  const row=(a,b)=>'<div class="r"><span>'+a+'</span><b>'+b+'</b></div>';
+  let h='<button class="x" aria-label="Stäng">✕</button><div class="mh">'+S[x.k][0]+'</div><h3>'+x.n+'</h3><div class="ms">'+S[x.k][1]+'</div>';
+  if(D[x.n])h+='<p class="desc">'+D[x.n]+'</p>';
+  h+=row("Datum",w)+row("Plats",x.p)+row("Status",t);
+  if(n>1&&x.k!=="mot"&&x.ap!==2&&!x.l)h+=row("Längd",n+" dagar");
+  h+=row("TV i Sverige",x.tv?TVI+x.tv:"Ej bekräftad");
+  h+='<a class="go" target="_blank" rel="noopener" href="https://www.google.com/search?q='+encodeURIComponent(x.n+" "+x.s.getFullYear())+'">Sök mer om tävlingen ↗</a>';
+  document.getElementById("sh").innerHTML=h;document.body.classList.add("mo");
+}
 function status(x){
   if(x.e<T)return["done","Avslutat"];
   if(x.ap===2)return["","Datum ej klart"];
@@ -178,18 +214,18 @@ function dtxt(x){
 function draw(){
   const ql=q.toLowerCase();
   const rows=ev.filter(x=>(showPast||x.e>=T)&&(!sel||x.k===sel)&&(!ql||(x.n+" "+x.p+" "+S[x.k][1]+" "+(x.tv||"")).toLowerCase().includes(ql)));
-  document.getElementById("cnt").textContent=rows.length+" mästerskap"+(sel?" · "+S[sel][1]:"");
+  cur=rows;document.getElementById("cnt").textContent=rows.length+" mästerskap"+(sel?" · "+S[sel][1]:"");
   let h="",last="";
   for(const x of rows){
     const m=x.s.toLocaleDateString("sv-SE",{month:"long",year:"numeric"});
     if(m!==last){h+="<h2>"+m+"</h2>";last=m}
     const[c,t]=status(x);
-    h+='<div class="card '+c+'"><div class="em">'+S[x.k][0]+'</div><div class="bd"><div class="nm">'+x.n+'</div><div class="mt">'+dtxt(x)+' · '+x.p+'</div>'+(x.tv?'<div class="tv">📺 '+x.tv+'</div>':'')+'</div><div class="st">'+t+'</div></div>';
+    h+='<div class="card '+c+'" data-i="'+rows.indexOf(x)+'"><div class="em">'+S[x.k][0]+'</div><div class="bd"><div class="nm">'+x.n+'</div><div class="mt">'+dtxt(x)+' · '+x.p+'</div>'+(x.tv?'<div class="tv">'+TVI+x.tv+'</div>':'')+'</div><div class="st">'+t+'</div></div>';
   }
   document.getElementById("list").innerHTML=h||'<div class="empty">Inget hittades.</div>';
 }
 function chips(){
-  const ks=Object.keys(S).filter(k=>ev.some(x=>x.k===k));
+  const ks=Object.keys(S).filter(k=>ev.some(x=>x.k===k)).sort((a,b)=>S[a][1].localeCompare(S[b][1],"sv"));
   const el=document.getElementById("chips");
   el.innerHTML='<button class="chip on" data-k="">Alla sporter</button>'+ks.map(k=>'<button class="chip" data-k="'+k+'"><span>'+S[k][0]+" "+S[k][1]+'</span><span class="n">'+ev.filter(x=>x.k===k).length+"</span></button>").join("");
   el.onclick=e=>{const b=e.target.closest(".chip");if(!b)return;sel=b.dataset.k;el.querySelectorAll(".chip").forEach(c=>c.classList.toggle("on",c===b));document.body.classList.remove("menu");window.scrollTo(0,0);draw()};
@@ -199,5 +235,9 @@ document.getElementById("past").onchange=e=>{showPast=e.target.checked;draw()};
 document.getElementById("mbtn").onclick=()=>document.body.classList.toggle("menu");
 document.getElementById("ov").onclick=()=>document.body.classList.remove("menu");
 document.getElementById("sbtn").onclick=()=>{const o=document.body.classList.toggle("srch");if(o)document.getElementById("q").focus()};
+const mo=document.getElementById("mo");
+mo.onclick=e=>{if(e.target===mo||e.target.closest(".x"))document.body.classList.remove("mo")};
+document.addEventListener("keydown",e=>{if(e.key==="Escape")document.body.classList.remove("mo")});
+document.getElementById("list").onclick=e=>{const c=e.target.closest(".card");if(c)show(+c.dataset.i)};
 chips();draw();
 </script></body></html>
