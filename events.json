@@ -1,10 +1,10 @@
 {
-"updated":"2026-11-09",
+"updated":"2026-11-10",
 "sports":{"ten": ["🎾", "Tennis"], "fot": ["⚽", "Fotboll"], "fri": ["🏃", "Friidrott"], "lan": ["🎿", "Längdskidor"], "sky": ["🎯", "Skidskytte"], "alp": ["⛷️", "Alpint"], "skr": ["⛸️", "Skridskor"], "snö": ["🏂", "Snowboard & freestyle"], "cur": ["🥌", "Curling"], "mot": ["🏎️", "Formel 1"], "hoc": ["🏒", "Ishockey"], "han": ["🤾", "Handboll"], "rug": ["🏉", "Rugby"], "spel": ["🏅", "OS"], "pil": ["🎱", "Pil & snooker"], "sim": ["🏊", "Simning"], "bas": ["🏀", "Basket"], "vol": ["🏐", "Volleyboll"], "bea": ["🏖️", "Beachvolleyboll"], "bor": ["🏓", "Bordtennis"]},
 "events":[
 {"s": "2026-11-15", "e": "2026-11-22", "n": "ATP Finals", "k": "ten", "p": "Turin, Italien", "tv": "TV4 Play", "d": "Säsongsavslutningen för de åtta bästa singelspelarna och dubbelparen."},
 {"s": "2026-11-17", "e": "2026-11-22", "n": "Davis Cup Finals", "k": "ten", "p": "Bologna, Italien", "ap": 1, "d": "Tennisens lagturnering för landslag, där slutspelet avgörs under en vecka."},
-{"s": "2026-11-20", "e": "2026-11-21", "n": "F1: Las Vegas", "k": "mot", "p": "USA", "tv": "Viaplay"},
+{"s": "2026-11-21", "e": "2026-11-22", "n": "F1: Las Vegas", "k": "mot", "p": "USA", "tv": "Viaplay"},
 {"s": "2026-11-26", "e": "2026-11-29", "n": "Skidskytte: Världscup Kontiolahti", "k": "sky", "p": "Finland"},
 {"s": "2026-11-27", "e": "2026-11-29", "n": "Längd: Världscup Ruka", "k": "lan", "p": "Finland"},
 {"s": "2026-11-28", "e": "2026-11-29", "n": "F1: Qatar", "k": "mot", "p": "Lusail", "tv": "Viaplay"},
