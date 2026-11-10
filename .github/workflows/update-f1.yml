@@ -1,0 +1,29 @@
+name: Uppdatera F1-kalendern
+
+on:
+  schedule:
+    - cron: "0 5 * * 1"   # varje måndag 05:00 UTC
+  workflow_dispatch:       # går också att köra för hand
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  f1:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Hämta F1-kalendern
+        run: python scripts/update_f1.py
+      - name: Skapa förslag (pull request) om något ändrats
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: auto/f1-update
+          commit-message: "Uppdatera F1-kalendern"
+          title: "Uppdatera F1-kalendern"
+          body: "Automatisk uppdatering från Jolpica F1 API. Granska ändringarna i events.json och godkänn om de ser rätt ut."
+          add-paths: events.json
