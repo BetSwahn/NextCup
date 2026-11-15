@@ -2,6 +2,7 @@
 "updated":"2026-11-09",
 "sports":{"ten": ["🎾", "Tennis"], "fot": ["⚽", "Fotboll"], "fri": ["🏃", "Friidrott"], "lan": ["🎿", "Längdskidor"], "sky": ["🎯", "Skidskytte"], "alp": ["⛷️", "Alpint"], "skr": ["⛸️", "Skridskor"], "snö": ["🏂", "Snowboard & freestyle"], "cur": ["🥌", "Curling"], "mot": ["🏎️", "Formel 1"], "hoc": ["🏒", "Ishockey"], "han": ["🤾", "Handboll"], "rug": ["🏉", "Rugby"], "spel": ["🏅", "OS"], "pil": ["🎱", "Pil & snooker"], "sim": ["🏊", "Simning"], "bas": ["🏀", "Basket"], "vol": ["🏐", "Volleyboll"], "bea": ["🏖️", "Beachvolleyboll"], "bor": ["🏓", "Bordtennis"]},
 "events":[
+{"s": "2026-11-08", "e": "2026-11-15", "n": "WTA Finals", "k": "ten", "p": "Indian Wells, USA", "d": "Säsongsavslutningen för damtennisens åtta bästa. Flyttades i år från Riyadh till USA."},
 {"s": "2026-11-15", "e": "2026-11-22", "n": "ATP Finals", "k": "ten", "p": "Turin, Italien", "tv": "TV4 Play", "d": "Säsongsavslutningen för de åtta bästa singelspelarna och dubbelparen."},
 {"s": "2026-11-17", "e": "2026-11-22", "n": "Davis Cup Finals", "k": "ten", "p": "Bologna, Italien", "ap": 1, "d": "Tennisens lagturnering för landslag, där slutspelet avgörs under en vecka."},
 {"s": "2026-11-20", "e": "2026-11-21", "n": "F1: Las Vegas", "k": "mot", "p": "USA", "tv": "Viaplay"},
@@ -97,6 +98,7 @@
 {"s": "2027-10-23", "e": "2027-10-24", "n": "F1: USA", "k": "mot", "p": "Austin", "tv": "Viaplay"},
 {"s": "2027-10-30", "e": "2027-10-31", "n": "F1: Mexiko", "k": "mot", "p": "Mexico City", "tv": "Viaplay"},
 {"s": "2027-11-06", "e": "2027-11-07", "n": "F1: Brasilien (sprint)", "k": "mot", "p": "São Paulo", "tv": "Viaplay"},
+{"s": "2027-11-07", "e": "2027-11-14", "n": "WTA Finals", "k": "ten", "p": "Charlotte, USA", "ap": 2, "l": "nov 2027"},
 {"s": "2027-11-19", "e": "2027-11-20", "n": "F1: Las Vegas", "k": "mot", "p": "USA", "tv": "Viaplay"},
 {"s": "2027-12-04", "e": "2027-12-05", "n": "F1: Qatar (sprint)", "k": "mot", "p": "Lusail", "tv": "Viaplay"},
 {"s": "2027-12-11", "e": "2027-12-12", "n": "F1: Abu Dhabi (sprint)", "k": "mot", "p": "Yas Marina", "tv": "Viaplay"},
